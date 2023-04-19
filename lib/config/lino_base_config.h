@@ -24,9 +24,9 @@
 // #define K_P 0.6 // P constant
 // #define K_I 0.3 // I constant
 // #define K_D 0.5 // D constant
-#define K_P 1.2 // P constant
-#define K_I 0 // I constant
-#define K_D 0 // D constant
+#define K_P 0.71 // P constant
+#define K_I 0.2 // I constant
+#define K_D 0.12 // D constant
 
 //define your robot' specs here
 #define MAX_RPM 333               // motor's maximum RPM

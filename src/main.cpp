@@ -221,7 +221,7 @@ void loop()
     //this block stops the motor when no command is received
     if ((millis() - g_prev_command_time) >= 400)
     {
-        stopBase();
+        //stopBase();
     }
 
     //this block publishes the IMU data based on defined rate
