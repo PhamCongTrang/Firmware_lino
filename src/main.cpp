@@ -16,6 +16,7 @@
 #include "lino_msgs/PID.h"
 //header file for imu
 #include "lino_msgs/Imu.h"
+#include "sensor_msgs/Imu.h"
 
 #include "lino_base_config.h"
 #include "Motor.h"
@@ -64,8 +65,8 @@ ros::NodeHandle nh;
 ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
 ros::Subscriber<lino_msgs::PID> pid_sub("pid", PIDCallback);
 
-lino_msgs::Imu raw_imu_msg;
-ros::Publisher raw_imu_pub("raw_imu", &raw_imu_msg);
+sensor_msgs::Imu raw_imu_msg;
+ros::Publisher raw_imu_pub("/imu/arduino_raw", &raw_imu_msg);
 
 lino_msgs::Velocities raw_vel_msg;
 ros::Publisher raw_vel_pub("raw_vel", &raw_vel_msg);
@@ -112,15 +113,19 @@ void commandCallback(const geometry_msgs::Twist& cmd_msg)
 }
 
 void publishIMU()
-{
-    //pass accelerometer data to imu object
+{   
+    //timestamp
+    raw_imu_msg.header.stamp = nh.now();
+
+    //pass accelerometer data to imu object   
     raw_imu_msg.linear_acceleration = readAccelerometer();
 
     //pass gyroscope data to imu object
     raw_imu_msg.angular_velocity = readGyroscope();
 
     //pass accelerometer data to imu object
-    raw_imu_msg.magnetic_field = readMagnetometer();
+    //raw_imu_msg.magnetic_field = readMagnetometer();
+    
 
     //publish raw_imu_msg
     raw_imu_pub.publish(&raw_imu_msg);
